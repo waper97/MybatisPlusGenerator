@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.BeetlTemplateEngine;
 import com.baomidou.mybatisplus.generator.fill.Column;
 
 import java.util.Arrays;
@@ -27,13 +28,13 @@ public class MybatisPlusGenerator {
                         // 开启swagger模式
                         .enableSwagger()
                         // 输出位置
-                        .outputDir("C:\\Users\\Administrator\\IdeaProjects\\chongshoumicropink\\src\\main\\java"))
+                        .outputDir("C:\\Users\\Administrator\\IdeaProjects\\MybatisPlusGenerator\\chongshoumicropink\\src\\main\\java"))
                 // 包配置
                 .packageConfig((scanner, builder) -> builder.parent(scanner.apply("请输入包名？"))
                         .service("service")
-                        .serviceImpl("serviceImpl")
-                        .mapper("mappper")
-                        .xml("mapper.xml")
+                        .serviceImpl("service.Impl")
+                        .mapper("mapper")
+                        .xml("mapper")
                         .entity("entity")
                 )
 
@@ -52,6 +53,7 @@ public class MybatisPlusGenerator {
                    .templateEngine(new BeetlTemplateEngine())
                    .templateEngine(new FreemarkerTemplateEngine())
                  */
+//                .templateEngine(new BeetlTemplateEngine())
                 .templateConfig((scanner, builder) -> getTemplateConfig())
 
 
@@ -67,8 +69,8 @@ public class MybatisPlusGenerator {
                 .service("/templates/service.java.vm")
                 .serviceImpl("/templates/Impl.java.vm")
                 .mapper("/templates/mapper.java.vm")
-                .xml("/mapper.xml.ftl")
-                .controller("/templates/controller.java.ftl")
+                .xml("/templates/mapper.xml.ftl")
+                .controller("/templates/controller.java.vm")
                 .build();
         return templateConfig;
     }

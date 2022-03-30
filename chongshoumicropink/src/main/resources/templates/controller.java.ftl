@@ -1,96 +1,93 @@
 package ${package.Controller};
 
-
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.ycj.oe.service.${table.serviceName};
-import com.ycj.oe.entity.${entity};
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import base.ResponseObj;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+<#if swagger2>
+    import io.swagger.annotations.ApiOperation;
+</#if>
 import java.util.List;
-        <#if restControllerStyle>
-import org.springframework.web.bind.annotation.RestController;
-        <#else>
-import org.springframework.stereotype.Controller;
-        </#if>
-        <#if superControllerClassPackage??>
-import ${superControllerClassPackage};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+<#if restControllerStyle>
+    import org.springframework.web.bind.annotation.DeleteMapping;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.PostMapping;
+    import org.springframework.web.bind.annotation.RestController;
+<#else>
+    import org.springframework.stereotype.Controller;
+</#if>
+<#if superControllerClassPackage??>
+    import ${superControllerClassPackage};
 </#if>
 
 /**
-* @Package: ${package.Entity}
-* @Author ${author}
-* @CreateDate ${date}
-* @describe $!{table.comment}前端控制器1
+* <p>
+    * ${table.comment!} 控制层
+    * </p>
+*
+* @author ${author}
+* @since ${date}
 */
-        <#if restControllerStyle>
-@Api(tags = {"${table.comment!}"})
-@RestController
-        <#else>
-@Controller
+<#if restControllerStyle>
+    @RestController
+<#else>
+    @Controller
 </#if>
-        @RequestMapping("<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
-        <#if kotlin>
-class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
-        <#else>
-        <#if superControllerClass??>
-public class ${table.controllerName} extends ${superControllerClass} {
-        <#else>
-public class ${table.controllerName} {
-</#if>
-private Logger logger = LoggerFactory.getLogger(getClass());
-@Autowired
-private ${table.serviceName} ${(table.serviceName?substring(1))?uncap_first};
+@RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+<#if kotlin>
+    class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
+<#else>
+    <#if superControllerClass??>
+        public class ${table.controllerName} extends ${superControllerClass} {
+    <#else>
+        public class ${table.controllerName} {
+    </#if>
 
-/**
- * 查询分页数据
- */
-@ApiOperation(value = "查询分页数据")
-@RequestMapping(value = "/list")
-public ResponseWeb<Page> findListByPage(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,@RequestParam(name = "pageSize", defaultValue = "20") int pageSize){
-        return null;
-        }
+    @Autowired
+    private ${table.serviceName} ${table.serviceName?lower_case};
 
+    <#if restControllerStyle>
+        @GetMapping("/list")
+    </#if>
+    <#if swagger2>
+        @ApiOperation(value = "${table.comment}列表查询",notes = "list")
+    </#if>
+    public List<${entity}> list(){
 
-/**
- * 根据id查询
- */
-@ApiOperation(value = "根据id查询数据")
-@RequestMapping(value = "/getById")
-public ResponseWeb<${entity}> getById(@RequestParam("pkid") String pkid){
-        return null;
-        }
+    return ${table.serviceName?lower_case}.list();
+    }
 
-/**
- * 新增
- */
-@ApiOperation(value = "新增数据")
-@RequestMapping(value = "/add", method = RequestMethod.POST)
-public ResponseWeb<${entity}> add(@RequestBody ${entity} ${entity?uncap_first}){
-        return null;
-        }
+    <#if restControllerStyle>
+        @GetMapping("/get")
+    </#if>
+    <#if swagger2>
+        @ApiOperation(value = "${table.comment}详情查询",notes = "get")
+    </#if>
+    public ${entity} get(String id){
 
-/**
- * 删除
- */
-@ApiOperation(value = "删除数据")
-@RequestMapping(value = "/del")
-public ResponseWeb<String> delete(@RequestParam("ids") List<String> ids){
-        return null;
-        }
+    return ${table.serviceName?lower_case}.getById(id);
+    }
 
-/**
- * 修改
- */
-@ApiOperation(value = "更新数据")
-@RequestMapping(value = "/update", method = RequestMethod.POST)
-public ResponseWeb<${entity}> update(@RequestBody ${entity} ${entity?uncap_first}){
-        return null;
-        }
+    <#if restControllerStyle>
+        @PostMapping("/save")
+    </#if>
+    <#if swagger2>
+        @ApiOperation(value = "${table.comment}保存",notes = "save")
+    </#if>
+    public void save(${entity} ${entity?lower_case}){
 
-        }
+    ${table.serviceName?lower_case}.save(${entity?lower_case});
+    }
+
+    <#if restControllerStyle>
+        @DeleteMapping("/delete")
+    </#if>
+    <#if swagger2>
+        @ApiOperation(value = "${table.comment}删除",notes = "delete")
+    </#if>
+    public void delete(List<String> ids){
+
+    ${table.serviceName?lower_case}.removeByIds(ids);
+    }
+    }
 </#if>
