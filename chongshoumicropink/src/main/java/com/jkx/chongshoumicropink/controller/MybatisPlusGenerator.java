@@ -23,7 +23,10 @@ public class MybatisPlusGenerator {
         FastAutoGenerator.create(
                 new DataSourceConfig.Builder("jdbc:mysql://192.168.234.131:3306/test","root","123456"))
                 // 全局配置
-                .globalConfig((scanner, builder) -> builder.author(scanner.apply("请输入作者名称？"))
+                .globalConfig((scanner, builder) -> builder
+                        // 交互式作用名称
+                         .author(scanner.apply("请输入作者名称？"))
+                        // .author("wangpeng")
                         .fileOverride()
                         // 开启swagger模式
                         .enableSwagger()
@@ -41,7 +44,9 @@ public class MybatisPlusGenerator {
                 // 策略配置
                 .strategyConfig((scanner, builder) -> builder.addInclude(getTables(scanner.apply("请输入表名，多个英文逗号分隔？所有输入 all")))
                         .controllerBuilder().enableRestStyle().enableHyphenStyle()
-                        .entityBuilder().enableLombok().columnNaming(NamingStrategy.no_change)
+                        .entityBuilder().enableLombok()
+                        // 下划线转驼峰命名
+                        .columnNaming(NamingStrategy.underline_to_camel)
                         .addTableFills(
                                 new Column("update_time",FieldFill.INSERT_UPDATE))
                         .addTableFills(
