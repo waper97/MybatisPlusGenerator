@@ -67,9 +67,9 @@ public class MybatisPlusGenerator {
 //                .disable(TemplateType.ENTITY)
                 .entity("/templates/entity.java.vm")
                 .service("/templates/service.java.vm")
-                .serviceImpl("/templates/Impl.java.vm")
+                .serviceImpl("/templates/serviceImpl.java.vm")
                 .mapper("/templates/mapper.java.vm")
-                .xml("/templates/mapper.xml.ftl")
+                .xml("/templates/mapper.xml.vm")
                 .controller("/templates/controller.java.vm")
                 .build();
         return templateConfig;

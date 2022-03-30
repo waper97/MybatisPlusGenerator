@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jkx.chongshoumicropink.mapper.StudentMapper">
 
+    <sql id="Base_Column_List">
+            id, name, student_no, class_id, course_id, creator_id, create_time, update_time
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.jkx.chongshoumicropink.entity.Student">
+            <id column="id" property="id" />
+            <result column="name" property="name" />
+            <result column="student_no" property="student_no" />
+            <result column="class_id" property="class_id" />
+            <result column="course_id" property="course_id" />
+            <result column="creator_id" property="creator_id" />
+            <result column="create_time" property="create_time" />
+            <result column="update_time" property="update_time" />
+    </resultMap>
+
+
+
 </mapper>
